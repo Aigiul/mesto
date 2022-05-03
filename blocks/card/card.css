@@ -1,0 +1,31 @@
+.card {
+  width: 282px;
+  height: 361px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 17px 20px 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 0px solid #000000;
+  overflow: hidden;
+}
+
+.card:nth-of-type(3n) {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 879px) {
+  .card:nth-of-type(3n) {
+    margin-right: 17px;
+  }
+}
+
+@media screen and (max-width: 563px) {
+  .card {
+    margin: 0 0 20px 0;
+  }
+
+  .card:nth-of-type(3n) {
+    margin-right: 0;
+  }
+}
