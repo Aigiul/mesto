@@ -2,45 +2,29 @@
   position: absolute;
   right: -39px;
   top: -41px;
-  cursor: pointer;
+  background-color: transparent;
+  background-image: url("../../../images/close-icon.svg");
+  background-position: 50%;
+  background-repeat: no-repeat;
   border: none;
-  background: none;
-  height: 32px;
+  outline: none;
+  cursor: pointer;
   width: 32px;
+  height: 32px;
   padding: 0;
 }
 
-.popup__close-button:before {
-  position: absolute;
-  content: '';
-  height: 32px;
-  border: 1px solid white;
-  top: 0;
-  transform: rotate(45deg);
+.popup__close-button:hover {
+  opacity: 0.6;
 }
 
-.popup__close-button:after {
-  position: absolute;
-  content: '';
-  height: 32px;
-  border: 1px solid white;
-  top: 0;
-  transform: rotate(-45deg);
-}
-
-@media screen and (max-width: 516px) {
+@media screen and (max-width: 768px) {
   .popup__close-button {
+    background-image: url("../../../images/close-icon-mobile.svg");
+    background-position: 50%;
     right: 0;
     top: -37px;
     height: 20px;
     width: 20px;
-  }
-
-  .popup__close-button:before {
-    height: 20px;
-  }
-
-  .popup__close-button:after {
-    height: 20px;
   }
 }

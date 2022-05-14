@@ -1,32 +1,45 @@
 const openPopupButton = document.querySelector('.profile__edit-button');
 const popup = document.querySelector('.popup');
 const popupCloseButton = popup.querySelector('.popup__close-button');
-let formElement = document.querySelector('.popup__container');
 let nameInput = document.querySelector('#input-popup-title');
-let aboutInput = document.querySelector('#input-popup-subtitle');
-let saveButton = popup.querySelector('.popup__save-button');
-let Name = document.querySelector('.profile__title');
-let About = document.querySelector('.profile__subtitle');
+let jobInput = document.querySelector('#input-popup-subtitle');
+let profileName = document.querySelector('.profile__title');
+let profileJob = document.querySelector('.profile__subtitle');
+let formElement = document.querySelector('.popup__container');
+// let saveButton = popup.querySelector('.popup__save-button'); - не используется пока
 
-function popupOpenToggle() {
-  popup.classList.toggle('popup_opened');
+// открытие попапа
+
+function openPopup() {
+  popup.classList.add('popup_opened');
 }
 
-function popupOverlayClickHandler(evt) {
-  console.log(evt.target);
-  console.log(evt.currentTarget);
+// закрытие попапа
+function closePopup() {
+  popup.classList.remove('popup_opened');
+}
+
+
+function formSubmitHandler (evt) { 
+  evt.preventDefault();  
+  profileName.textContent = nameInput.value; 
+  profileJob.textContent = jobInput.value;
+  closePopup();
+}; 
+
+formElement.addEventListener('submit', formSubmitHandler);  
+
+openPopupButton.addEventListener('click', openPopup);
+
+popupCloseButton.addEventListener('click', closePopup);
+
+/* function popupOverlayClickHandler(evt) {
   if (evt.target === evt.currentTarget) {
-    popupOpenToggle();
+    closePopup();
   }
-}
+} */ // - закрытие попапа кликом на оверлэй
 
-openPopupButton.addEventListener('click', popupOpenToggle);
-
-popupCloseButton.addEventListener('click', popupOpenToggle);
-
-popup.addEventListener('click', popupOverlayClickHandler);
-
-if (nameInput.length < 2) {
+/* if (nameInput.length < 2) {
   saveButton.setAttribute('disabled', true);
   saveButton.classList.add('popup__save-button_disabled');
 } else {
@@ -34,21 +47,16 @@ if (nameInput.length < 2) {
   saveButton.classList.remove('popup__save-button_disabled');
 }
 
-if (aboutInput.length < 2) {
+if (jobInput.length < 2) {
   saveButton.setAttribute('disabled', true);
   saveButton.classList.add('popup__save-button_disabled');
 } else {
   saveButton.removeAttribute('disabled');
   saveButton.classList.remove('popup__save-button_disabled');
-}
+} */ // - условия кол-ва символов в инпутах
 
-function formSubmitHandler (evt) {
-  evt.preventDefault(); 
-  nameInput.value; // Получите значение полея nameInput из свойства value
-  aboutInput.value; // Получите значение полея jobInput из свойства value
-
-  Name.textContent = nameInput.value;
-  About.textContent = aboutInput.value;
-}
-
-formElement.addEventListener('submit', formSubmitHandler); 
+/* function popupOpen() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
+} */
+// popup.addEventListener('click', popupOverlayClickHandler); - закрытие попапа оверлэем

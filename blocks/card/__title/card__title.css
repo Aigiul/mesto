@@ -1,10 +1,9 @@
 .card__title {
   max-width: 210px;
   margin: 0;
-  font-family: Inter;
   font-size: 24px;
   font-weight: 900;
-  line-height: 29px;
+  line-height: 29.05px;
   text-align: left;
   color: #000;
   text-overflow: ellipsis;
