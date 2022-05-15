@@ -12,6 +12,8 @@ let formElement = document.querySelector('.popup__container');
 
 function openPopup() {
   popup.classList.add('popup_opened');
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 }
 
 // закрытие попапа
