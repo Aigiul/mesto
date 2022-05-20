@@ -21,7 +21,6 @@ function closePopup() {
   popup.classList.remove('popup_opened');
 }
 
-
 function formSubmitHandler (evt) { 
   evt.preventDefault();  
   profileName.textContent = nameInput.value; 
@@ -62,3 +61,53 @@ if (jobInput.length < 2) {
   jobInput.value = profileSubtitle.textContent;
 } */
 // popup.addEventListener('click', popupOverlayClickHandler); - закрытие попапа оверлэем
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+// Дом элементы
+
+const initialContainer = document.querySelector('.cards');
+
+
+// Рендер карточки
+
+const renderInitialCard = (initialData) => {
+  initialContainer.insertAdjacentHTML('beforeend', `
+  <li class="card">
+    <img class="card__image" src=${initialData.link}>
+    <div class="card__info">
+      <h2 class="card__title">${initialData.name}</h2>
+      <button type="button" class="card__like"></button>
+    </div>
+  </li>
+  `)
+}
+
+initialCards.forEach((initialData) => {
+renderInitialCard(initialData);
+})

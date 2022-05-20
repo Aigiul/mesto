@@ -27,7 +27,7 @@
     </section>
     <section class="gallery" aria-label="галерея">
       <ul class="cards">
-        <li class="card">
+       <!-- <li class="card">
           <img class="card__image" alt="Фото Карачаевск" src="./images/karachaevsk.jpg">
           <div class="card__info">
             <h2 class="card__title">Карачаевск</h2>
@@ -68,14 +68,14 @@
             <h2 class="card__title">Карачаево-Черкесия</h2>
             <button type="button" class="card__like"></button>
           </div>
-        </li>
+        </li> -->
       </ul>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_edit">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="popup-form-reduct">
@@ -86,6 +86,26 @@
       </form>
     </div>
   </div>
+  <div class="popup popup_add-card">
+    <div class="popup__container">
+      <h2 class="popup__title">новое место</h2>
+      <form class="popup__form" name="popup-form-reduct">
+        <input type="text" class="popup__input" id="input-popup-title" value placeholder="Название" name="name" required minlength="2" maxlength="40">
+        <input type="text" class="popup__input" id="input-popup-subtitle" value placeholder="Ссылка на картинку" name="input-image" required minlength="2" maxlength="200">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="button" class="popup__close-button"></button>
+      </form>
+    </div>
+  </div>
   <script src="./scripts/script.js"></script>
+  <template id="card">
+    <li class="card">
+      <img class="card__image">
+      <div class="card__info">
+        <h2 class="card__title"></h2>
+        <button type="button" class="card__like"></button>
+      </div>
+    </li>
+  </template>
 </body>
 </html>
