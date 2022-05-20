@@ -112,12 +112,26 @@ const initialCards = [
 // Дом элементы
 
 const initialContainer = document.querySelector('.cards');
+const form = document.querySelector('#popup-form-add-card');
+const nameInputCard = document.querySelector('#input-popup-title-card');
+const linkInputCard = document.querySelector('#input-popup-link-card');
 
+// Обработчики событий
+
+const handleSubmitAddIninitialForm = (event) => {
+  event.preventDefault();
+
+  renderInitialCard({ name: nameInputCard.value, link: linkInputCard.value });
+
+  nameInputCard.value = '';
+  linkInputCard.value = '';
+  closePopupAddCard();
+};
 
 // Рендер карточки
 
 const renderInitialCard = (initialData) => {
-  initialContainer.insertAdjacentHTML('beforeend', `
+  initialContainer.insertAdjacentHTML('afterbegin', `
   <li class="card">
     <img class="card__image" src=${initialData.link}>
     <div class="card__info">
@@ -126,8 +140,10 @@ const renderInitialCard = (initialData) => {
     </div>
   </li>
   `)
-}
+};
 
 initialCards.forEach((initialData) => {
 renderInitialCard(initialData);
-})
+});
+
+form.addEventListener('submit', handleSubmitAddIninitialForm);
