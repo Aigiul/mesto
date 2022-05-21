@@ -133,6 +133,10 @@ const handleSubmitAddInitialForm = (event) => {
   closePopupAddCard();
 };
 
+const handleDeleteInitialCard = (event) => {
+  event.target.closest('.card').remove();
+};
+
 // Генерация карточки
 
 const generateInitialCard = (initialData) => {
@@ -143,6 +147,10 @@ const generateInitialCard = (initialData) => {
 
   const linkInitialCard = newInitialCard.querySelector(".card__image");
   linkInitialCard.src = initialData.link;
+
+  const deleteButton = newInitialCard.querySelector('.card__delete-button');
+
+  deleteButton.addEventListener('click', handleDeleteInitialCard);
 
   newInitialCard.querySelector('.card__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('card__like_active');
