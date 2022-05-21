@@ -108,6 +108,8 @@ const initialCards = [
   },
 ];
 
+initialCards.reverse();
+
 // Шаблоны
 
 const initialCardTemplate = document.querySelector('#card-template').content.querySelector('.card');
@@ -141,6 +143,10 @@ const generateInitialCard = (initialData) => {
 
   const linkInitialCard = newInitialCard.querySelector(".card__image");
   linkInitialCard.src = initialData.link;
+
+  newInitialCard.querySelector('.card__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('card__like_active');
+    });
 
   return newInitialCard;
 };
