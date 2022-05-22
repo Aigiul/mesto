@@ -28,7 +28,7 @@ function closePopup() {
 
 // открытие попапа просмотра картинки
 
-function openPopup(popupOpenImage) {
+function openPopupImage() {
   popupOpenImage.classList.add('popup_opened');
 }
 
@@ -142,7 +142,7 @@ const generateInitialCard = (initialData) => {
 
     popupFigcaption.textContent = initialData.name;
 
-    openPopup(popupOpenImage);  
+    openPopupImage();  
   });
 
   const deleteButton = newInitialCard.querySelector('.card__delete-button');
