@@ -3,9 +3,9 @@ const popup = document.querySelector(".popup");
 const popupCloseButton = popup.querySelector(".popup__close-button");
 const openPopupButtonAddCard = document.querySelector(".profile__add-button");
 const popupAddCard = document.querySelector(".popup_add-card");
-const popupCloseButtonAddCard = popupAddCard.querySelector(
-  ".popup__close-button"
-);
+const popupCloseButtonAddCard = popupAddCard.querySelector(".popup__close-button");
+const popupOpenImage = document.querySelector('.popup_view-card');
+const popupCloseButtonPreview = popupOpenImage.querySelector(".popup__close-button");
 let nameInput = document.querySelector("#input-popup-title");
 let jobInput = document.querySelector("#input-popup-subtitle");
 let profileName = document.querySelector(".profile__title");
@@ -25,6 +25,19 @@ function openPopup() {
 function closePopup() {
   popup.classList.remove("popup_opened");
 }
+
+// открытие попапа просмотра картинки
+
+function openPopup(popupOpenImage) {
+  popupOpenImage.classList.add('popup_opened');
+}
+
+// закрытие попапа просмотра картинки
+
+function closePopupPreview() {
+  popupOpenImage.classList.remove('popup_opened');
+}
+
 
 // открытие попапа добавления карточки
 function openPopupAddCard() {
@@ -53,33 +66,7 @@ openPopupButtonAddCard.addEventListener("click", openPopupAddCard);
 
 popupCloseButtonAddCard.addEventListener("click", closePopupAddCard);
 
-/* function popupOverlayClickHandler(evt) {
-  if (evt.target === evt.currentTarget) {
-    closePopup();
-  }
-} */ // - закрытие попапа кликом на оверлэй
-
-/* if (nameInput.length < 2) {
-  saveButton.setAttribute('disabled', true);
-  saveButton.classList.add('popup__save-button_disabled');
-} else {
-  saveButton.removeAttribute('disabled');
-  saveButton.classList.remove('popup__save-button_disabled');
-}
-
-if (jobInput.length < 2) {
-  saveButton.setAttribute('disabled', true);
-  saveButton.classList.add('popup__save-button_disabled');
-} else {
-  saveButton.removeAttribute('disabled');
-  saveButton.classList.remove('popup__save-button_disabled');
-} */ // - условия кол-ва символов в инпутах
-
-/* function popupOpen() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
-} */
-// popup.addEventListener('click', popupOverlayClickHandler); - закрытие попапа оверлэем
+popupCloseButtonPreview.addEventListener("click", closePopupPreview);
 
 const initialCards = [
   {
@@ -120,6 +107,8 @@ const initialContainer = document.querySelector(".cards");
 const form = document.querySelector("#popup-form-add-card");
 const nameInputCard = document.querySelector("#input-popup-title-card");
 const linkInputCard = document.querySelector("#input-popup-link-card");
+const popupImage = document.querySelector('.popup__image');
+const popupFigcaption = document.querySelector('.popup__figcaption');
 
 // Обработчики событий
 
@@ -140,13 +129,21 @@ const handleDeleteInitialCard = (event) => {
 // Генерация карточки
 
 const generateInitialCard = (initialData) => {
-  const newInitialCard = initialCardTemplate.cloneNode(true);
+  const newInitialCard = initialCardTemplate.cloneNode(true); // клонировать узел
 
-  const nameInitialCard = newInitialCard.querySelector(".card__title");
+  const nameInitialCard = newInitialCard.querySelector(".card__title");  // вставляем название карты
   nameInitialCard.textContent = initialData.name;
 
-  const linkInitialCard = newInitialCard.querySelector(".card__image");
+  const linkInitialCard = newInitialCard.querySelector(".card__image"); // вставляем картинку
   linkInitialCard.src = initialData.link;
+
+  linkInitialCard.addEventListener('click', function() {
+    popupImage.src = initialData.link;
+
+    popupFigcaption.textContent = initialData.name;
+
+    openPopup(popupOpenImage);  
+  });
 
   const deleteButton = newInitialCard.querySelector('.card__delete-button');
 
@@ -170,3 +167,31 @@ initialCards.forEach((initialData) => {
 });
 
 form.addEventListener("submit", handleSubmitAddInitialForm);
+
+/* function popupOverlayClickHandler(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup();
+  }
+} */ // - закрытие попапа кликом на оверлэй
+
+/* if (nameInput.length < 2) {
+  saveButton.setAttribute('disabled', true);
+  saveButton.classList.add('popup__save-button_disabled');
+} else {
+  saveButton.removeAttribute('disabled');
+  saveButton.classList.remove('popup__save-button_disabled');
+}
+
+if (jobInput.length < 2) {
+  saveButton.setAttribute('disabled', true);
+  saveButton.classList.add('popup__save-button_disabled');
+} else {
+  saveButton.removeAttribute('disabled');
+  saveButton.classList.remove('popup__save-button_disabled');
+} */ // - условия кол-ва символов в инпутах
+
+/* function popupOpen() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
+} */
+// popup.addEventListener('click', popupOverlayClickHandler); - закрытие попапа оверлэем
