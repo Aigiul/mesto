@@ -1,72 +1,53 @@
 const openPopupButton = document.querySelector(".profile__edit-button");
-const popup = document.querySelector(".popup");
-const popupCloseButton = popup.querySelector(".popup__close-button");
+const popups = document.querySelectorAll(".popup");
+const profilePopup = document.querySelector('.popup_edit');
 const openPopupButtonAddCard = document.querySelector(".profile__add-button");
 const popupAddCard = document.querySelector(".popup_add-card");
-const popupCloseButtonAddCard = popupAddCard.querySelector(".popup__close-button");
 const popupOpenImage = document.querySelector('.popup_view-card');
-const popupCloseButtonPreview = popupOpenImage.querySelector(".popup__close-button");
-let nameInput = document.querySelector("#input-popup-title");
-let jobInput = document.querySelector("#input-popup-subtitle");
-let profileName = document.querySelector(".profile__title");
-let profileJob = document.querySelector(".profile__subtitle");
-let formElement = document.querySelector(".popup__container");
-// let saveButton = popup.querySelector('.popup__save-button'); - не используется пока
+const nameInput = document.querySelector("#input-popup-title");
+const jobInput = document.querySelector("#input-popup-subtitle");
+const profileName = document.querySelector(".profile__title");
+const profileJob = document.querySelector(".profile__subtitle");
+const formReductElement = document.querySelector(".popup__container");
 
-// открытие попапа редакта профиля
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
 
-function openPopup() {
-  popup.classList.add("popup_opened");
+openPopupButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-}
+  openPopup(profilePopup);
+})
 
-// закрытие попапа редакта профиля
-function closePopup() {
-  popup.classList.remove("popup_opened");
-}
-
-// открытие попапа просмотра картинки
-
-function openPopupImage() {
-  popupOpenImage.classList.add('popup_opened');
-}
-
-// закрытие попапа просмотра картинки
-
-function closePopupPreview() {
-  popupOpenImage.classList.remove('popup_opened');
-}
-
-
-// открытие попапа добавления карточки
-function openPopupAddCard() {
-  popupAddCard.classList.add("popup_opened");
-}
-
-// закрытие попапа добавления краточки
-function closePopupAddCard() {
-  popupAddCard.classList.remove("popup_opened");
-}
-
-function formSubmitHandler(evt) {
-  evt.preventDefault();
+function formSubmitHandler(e) {
+  e.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  closePopup();
+  closePopup(profilePopup);
 }
 
-formElement.addEventListener("submit", formSubmitHandler);
+// закрытие попапа 
 
-openPopupButton.addEventListener("click", openPopup);
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
 
-popupCloseButton.addEventListener("click", closePopup);
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup)
+    }
+  })
+})
 
-openPopupButtonAddCard.addEventListener("click", openPopupAddCard);
+formReductElement.addEventListener("submit", formSubmitHandler);
 
-popupCloseButtonAddCard.addEventListener("click", closePopupAddCard);
+openPopupButtonAddCard.addEventListener("click", () => openPopup(popupAddCard));
 
-popupCloseButtonPreview.addEventListener("click", closePopupPreview);
 
 const initialCards = [
   {
@@ -104,7 +85,7 @@ const initialCardTemplate = document.querySelector('#card-template').content.que
 // Дом элементы
 
 const initialContainer = document.querySelector(".cards");
-const form = document.querySelector("#popup-form-add-card");
+const formAddCard = document.querySelector("#popup-form-add-card");
 const nameInputCard = document.querySelector("#input-popup-title-card");
 const linkInputCard = document.querySelector("#input-popup-link-card");
 const popupImage = document.querySelector('.popup__image');
@@ -117,9 +98,9 @@ const handleSubmitAddInitialForm = (event) => {
 
   renderInitialCard({ name: nameInputCard.value, link: linkInputCard.value });
 
-  nameInputCard.value = "";
-  linkInputCard.value = "";
-  closePopupAddCard();
+  closePopup(popupAddCard);
+  
+  formAddCard.reset();
 };
 
 const handleDeleteInitialCard = (event) => {
@@ -136,13 +117,15 @@ const generateInitialCard = (initialData) => {
 
   const linkInitialCard = newInitialCard.querySelector(".card__image"); // вставляем картинку
   linkInitialCard.src = initialData.link;
+  linkInitialCard.alt = initialData.name;
 
   linkInitialCard.addEventListener('click', function() {
     popupImage.src = initialData.link;
+    popupImage.alt = initialData.name;
 
     popupFigcaption.textContent = initialData.name;
 
-    openPopupImage();  
+    openPopup(popupOpenImage);  
   });
 
   const deleteButton = newInitialCard.querySelector('.card__delete-button');
@@ -166,32 +149,4 @@ initialCards.forEach((initialData) => {
   renderInitialCard(initialData);
 });
 
-form.addEventListener("submit", handleSubmitAddInitialForm);
-
-/* function popupOverlayClickHandler(evt) {
-  if (evt.target === evt.currentTarget) {
-    closePopup();
-  }
-} */ // - закрытие попапа кликом на оверлэй
-
-/* if (nameInput.length < 2) {
-  saveButton.setAttribute('disabled', true);
-  saveButton.classList.add('popup__save-button_disabled');
-} else {
-  saveButton.removeAttribute('disabled');
-  saveButton.classList.remove('popup__save-button_disabled');
-}
-
-if (jobInput.length < 2) {
-  saveButton.setAttribute('disabled', true);
-  saveButton.classList.add('popup__save-button_disabled');
-} else {
-  saveButton.removeAttribute('disabled');
-  saveButton.classList.remove('popup__save-button_disabled');
-} */ // - условия кол-ва символов в инпутах
-
-/* function popupOpen() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
-} */
-// popup.addEventListener('click', popupOverlayClickHandler); - закрытие попапа оверлэем
+formAddCard.addEventListener("submit", handleSubmitAddInitialForm);
