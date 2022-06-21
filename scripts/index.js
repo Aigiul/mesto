@@ -10,8 +10,10 @@ const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 const formReductElement = document.querySelector(".popup__container");
 
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keyup', handleEscUp);
 }
 
 openPopupButton.addEventListener("click", () => {
@@ -20,8 +22,8 @@ openPopupButton.addEventListener("click", () => {
   openPopup(profilePopup);
 })
 
-function formSubmitHandler(e) {
-  e.preventDefault();
+function formSubmitHandler(event) {
+  event.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(profilePopup);
@@ -31,6 +33,7 @@ function formSubmitHandler(e) {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleEscUp);
 }
 
 popups.forEach((popup) => {
@@ -48,6 +51,14 @@ formReductElement.addEventListener("submit", formSubmitHandler);
 
 openPopupButtonAddCard.addEventListener("click", () => openPopup(popupAddCard));
 
+// закрытие с помощью Esc
+
+const handleEscUp = (evt) => {
+  if (evt.key === 'Escape') {
+    const activePopup = document.querySelector('.popup_opened');
+    closePopup(activePopup);
+  }
+};
 
 const initialCards = [
   {
@@ -150,3 +161,4 @@ initialCards.forEach((initialData) => {
 });
 
 formAddCard.addEventListener("submit", handleSubmitAddInitialForm);
+

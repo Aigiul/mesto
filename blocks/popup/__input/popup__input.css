@@ -3,8 +3,12 @@
   border-bottom: 1px solid rgba(0,0,0,.2);
   font-size: 14px;
   line-height: 17px;
-  margin: 0 0 30px;
+  margin: 0 0 3px;
   outline: none;
-  padding: 0 0 9px;
+  padding: 0 0 8px;
   width: 100%;
+}
+
+.popup__input:invalid {
+  border-bottom: 1px solid #FF0000;
 }
