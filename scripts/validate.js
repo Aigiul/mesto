@@ -1,76 +1,65 @@
-function enableValidation(config) {
-  const form = document.querySelector(config.form);
-  
-  form.addEventListener('submit', handleFormSubmit);
-  form.addEventListener('input', (event) => handleFormInput(event,config));
-}
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__input_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__error-message_active');
+};
 
-function handleFormSubmit(event) {
-  event.preventDefault();
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__input_error');
+  errorElement.textContent = ' ';
+  errorElement.classList.remove('popup__error-message_active');
+};
 
-  const form = event.currentTarget;
-  const isValid = form.checkValidity();
-}
-
-function handleFormInput(event, config) {
-  const form = event.currentTarget;
-  const input = event.target;
-
-  //1. Установка текста ошибок у невалидных полей
-  setCustomError(input, config);
-
-  //2. Показ ошибок
-  setFieldError(input);
-
-  //3. Деактивируем кнопку
-  setSubmitButtonState(form, config);
-}
-
-function setCustomError(input, config) {
-  const validity = input.validity;
-
-  input.setCustomValidity('');
-
-  if (validity.tooShort || validity.tooLong) {
-    const currentLength = input.value.length;
-    const min = input.getAttribute('minlength');
-    const max = input.getAttribute('maxlength');
-    let errorMessage = `Минимальное количество символов ${min}. Длина текста сейчас: ${currentLength} символов.`;
-    input.setCustomValidity(errorMessage);
-  }
-
-  if (validity.typeMismatch) {
-    input.setCustomValidity(config.typeMismatchError);
-  }
-}
-
-function setFieldError(input) {
-  const span = document.querySelector(`#${input.id}-error`);
-  span.textContent = input.validationMessage;
-}
-
-function setSubmitButtonState(form, config) {
-  const button = form.querySelector(config.submitButton);
-  const isValid = form.checkValidity();
-
-  if (isValid) {
-    button.removeAttribute('disabled');
-    button.classList.remove('popup__save-button_disabled');
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
-    button.setAttribute('disabled', 'disabled');
-    button.classList.add(config.popupisInvalid);
+    hideInputError(formElement, inputElement);
   }
-}
+};
 
-enableValidation({
-  form: '.popup__form[id="popup-form-reduct"]',
-  submitButton: '.popup__save-button',
-  popupisInvalid: 'popup__save-button_disabled'
-});
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
 
-enableValidation({
-  form: '.popup__form[id="popup-form-add-card"]',
-  typeMismatchError: 'Это не ссылка',
-  submitButton: '.popup__save-button',
-  popupIsInvalid: 'popup__save-button_disabled'
-});
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__save-button_disabled');
+    buttonElement.setAttribute('disabled', 'disabled');
+  } else {
+    buttonElement.classList.remove('popup__save-button_disabled');
+    buttonElement.removeAttribute('disabled');
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__save-button');
+
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+    checkInputValidity(formElement, inputElement);
+    toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
+
+// Вызовем функцию
+enableValidation();
+

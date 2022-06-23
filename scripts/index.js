@@ -9,11 +9,12 @@ const jobInput = document.querySelector("#input-popup-subtitle");
 const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 const formReductElement = document.querySelector(".popup__container");
-
+const closePopupButton = document.querySelector('.popup__close-button');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keyup', handleEscUp);
+  document.addEventListener('keydown', handleEscUp);
+  popup.addEventListener('mousedown', closeClick);
 }
 
 openPopupButton.addEventListener("click", () => {
@@ -34,18 +35,24 @@ function formSubmitHandler(event) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleEscUp);
+  popup.removeEventListener('mousedown', closeClick);
 }
 
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup(popup)
-    }
-  })
+const closeClick = (evt) => {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.currentTarget);
+  }
+};
+
+popups.forEach((popup) => { 
+  popup.addEventListener('click', (evt) => { 
+    if (evt.target.classList.contains('popup__close-button')) { 
+      closePopup(popup);
+    } 
+  }) 
 })
+
+closePopupButton.addEventListener('click', () => closePopup);
 
 formReductElement.addEventListener("submit", formSubmitHandler);
 
