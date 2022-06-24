@@ -9,7 +9,6 @@ const jobInput = document.querySelector("#input-popup-subtitle");
 const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 const formReductElement = document.querySelector(".popup__container");
-const closePopupButton = document.querySelector('.popup__close-button');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -49,10 +48,8 @@ popups.forEach((popup) => {
     if (evt.target.classList.contains('popup__close-button')) { 
       closePopup(popup);
     } 
-  }) 
+  })
 })
-
-closePopupButton.addEventListener('click', () => closePopup);
 
 formReductElement.addEventListener("submit", formSubmitHandler);
 
@@ -119,6 +116,8 @@ const handleSubmitAddInitialForm = (event) => {
   closePopup(popupAddCard);
   
   formAddCard.reset();
+
+  enableValidation(config);
 };
 
 const handleDeleteInitialCard = (event) => {
@@ -128,6 +127,7 @@ const handleDeleteInitialCard = (event) => {
 // Генерация карточки
 
 const generateInitialCard = (initialData) => {
+
   const newInitialCard = initialCardTemplate.cloneNode(true); // клонировать узел
 
   const nameInitialCard = newInitialCard.querySelector(".card__title");  // вставляем название карты
@@ -143,7 +143,7 @@ const generateInitialCard = (initialData) => {
 
     popupFigcaption.textContent = initialData.name;
 
-    openPopup(popupOpenImage);  
+    openPopup(popupOpenImage);
   });
 
   const deleteButton = newInitialCard.querySelector('.card__delete-button');
@@ -152,7 +152,7 @@ const generateInitialCard = (initialData) => {
 
   newInitialCard.querySelector('.card__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('card__like_active');
-    });
+  });
 
   return newInitialCard;
 };
