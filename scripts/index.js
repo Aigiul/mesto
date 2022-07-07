@@ -1,3 +1,5 @@
+//import Card from "./Card.js";
+
 const openPopupButton = document.querySelector(".profile__edit-button");
 const popups = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector('.popup_edit');
@@ -93,9 +95,11 @@ const initialCards = [
 
 initialCards.reverse();
 
+//const deleteButton = newInitialCard.querySelector('.card__delete-button');
+
 // Шаблоны
 
-const initialCardTemplate = document.querySelector('#card-template').content.querySelector('.card');
+// const initialCardTemplate = document.querySelector('#card-template').content.querySelector('.card');
 
 // Дом элементы
 
@@ -120,11 +124,11 @@ const handleSubmitAddInitialForm = (event) => {
   enableValidation(config);
 };
 
-const handleDeleteInitialCard = (event) => {
+/*const handleDeleteInitialCard = (event) => {
   event.target.closest('.card').remove();
 };
 
-// Генерация карточки
+//Генерация карточки
 
 const generateInitialCard = (initialData) => {
 
@@ -166,6 +170,6 @@ const renderInitialCard = (initialData) => {
 initialCards.forEach((initialData) => {
   renderInitialCard(initialData);
 });
+*/
 
 formAddCard.addEventListener("submit", handleSubmitAddInitialForm);
-
