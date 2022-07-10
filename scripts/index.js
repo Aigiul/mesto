@@ -1,18 +1,17 @@
-//import Card from "./Card.js";
-
+import Card from './Card.js';
 const openPopupButton = document.querySelector(".profile__edit-button");
 const popups = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector('.popup_edit');
 const openPopupButtonAddCard = document.querySelector(".profile__add-button");
 const popupAddCard = document.querySelector(".popup_add-card");
-const popupOpenImage = document.querySelector('.popup_view-card');
+export const popupOpenImage = document.querySelector('.popup_view-card');
 const nameInput = document.querySelector("#input-popup-title");
 const jobInput = document.querySelector("#input-popup-subtitle");
 const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 const formReductElement = document.querySelector(".popup__container");
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleEscUp);
   popup.addEventListener('mousedown', closeClick);
@@ -93,7 +92,53 @@ const initialCards = [
   },
 ];
 
-initialCards.reverse();
+//initialCards.reverse();
+
+const initialContainer = document.querySelector(".cards");
+const formAddCard = document.querySelector("#popup-form-add-card");
+const nameInputCard = document.querySelector("#input-popup-title-card");
+const linkInputCard = document.querySelector("#input-popup-link-card");
+export const popupImage = document.querySelector('.popup__image');
+export const popupFigcaption = document.querySelector('.popup__figcaption');
+//const cardSelector = document.querySelector('#card-template');
+
+initialCards.forEach((item) => {
+  const card = new Card(item, '#card-template');
+  const cardElement = card.generateCard();
+
+  // Добавляем в DOM
+  initialContainer.append(cardElement);
+});
+
+
+
+/*function renderCard(cardElement) {
+  initialContainer.prepend(cardElement);
+}*/
+
+function createCard(item) {
+  const card = new Card(item, '#card-template');
+  const cardElement = card.generateCard();
+  initialContainer.prepend(cardElement);
+}
+ 
+function generateUserCard() {
+  const userCard = {};
+  userCard.name = nameInputCard.value;
+  userCard.link = linkInputCard.value;
+  createCard(userCard);
+}
+
+formAddCard.addEventListener("submit", (event) => {
+  event.preventDefault();
+  generateUserCard();
+  closePopup(popupAddCard);
+  
+  formAddCard.reset();
+});
+
+
+
 
 //const deleteButton = newInitialCard.querySelector('.card__delete-button');
 
@@ -103,20 +148,21 @@ initialCards.reverse();
 
 // Дом элементы
 
-const initialContainer = document.querySelector(".cards");
-const formAddCard = document.querySelector("#popup-form-add-card");
-const nameInputCard = document.querySelector("#input-popup-title-card");
-const linkInputCard = document.querySelector("#input-popup-link-card");
-const popupImage = document.querySelector('.popup__image');
-const popupFigcaption = document.querySelector('.popup__figcaption');
+
 
 // Обработчики событий
 
-const handleSubmitAddInitialForm = (event) => {
+/*const handleSubmitAddInitialForm = (event) => {
+  const data = {
+    name: nameInputCard.value, 
+    link: linkInputCard.value
+  };
+
   event.preventDefault();
-
-  renderInitialCard({ name: nameInputCard.value, link: linkInputCard.value });
-
+  let card = new Card(data, '#card-template');
+  elementsContain.prepend(card.generateCard());
+  
+  document.querySelector('.cards').prepend(cardElement);
   closePopup(popupAddCard);
   
   formAddCard.reset();
@@ -139,18 +185,18 @@ const generateInitialCard = (initialData) => {
 
   const linkInitialCard = newInitialCard.querySelector(".card__image"); // вставляем картинку
   linkInitialCard.src = initialData.link;
-  linkInitialCard.alt = initialData.name;
+  linkInitialCard.alt = initialData.name; */
 
-  linkInitialCard.addEventListener('click', function() {
+  /*function handleOpenPopup(event) {
     popupImage.src = initialData.link;
     popupImage.alt = initialData.name;
 
     popupFigcaption.textContent = initialData.name;
 
     openPopup(popupOpenImage);
-  });
+  };
 
-  const deleteButton = newInitialCard.querySelector('.card__delete-button');
+  /*const deleteButton = newInitialCard.querySelector('.card__delete-button');
 
   deleteButton.addEventListener('click', handleDeleteInitialCard);
 
@@ -172,4 +218,3 @@ initialCards.forEach((initialData) => {
 });
 */
 
-formAddCard.addEventListener("submit", handleSubmitAddInitialForm);

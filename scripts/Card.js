@@ -1,4 +1,7 @@
-class Card {
+
+import { popupOpenImage, openPopup, popupImage, popupFigcaption } from './index.js'
+
+export default class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
     this._link = data.link;
@@ -17,15 +20,17 @@ class Card {
 
   
   _addEventListeners() {
-    this._element.querySelector('.card__delete-button')
-      .addEventListener('click', (event) => {
-        this._deleteCard(event);
-      });  // навешиваем слушатель на кнопку удаления карточки
+    this._deleteButton.addEventListener('click', (event) => {
+      this._deleteCard(event);
+    });  // навешиваем слушатель на кнопку удаления карточки
 
-    this._element.querySelector('.card__like')
-      .addEventListener('click', (event) => {
-        this._clickLike(event);
+    this._likeButton.addEventListener('click', (event) => {
+      this._clickLike(event);
     });  // навешиваем слушатель на кнопку лайка
+
+    this._image.addEventListener('click', () => {
+      this._openPopupCard(); 
+    });  // навешиваем слушатель на картинку карточки
   }
 
   // удаление карточки
@@ -34,17 +39,27 @@ class Card {
     this._element.remove();
   }
 
-  // лайкаем
+  // проставление лайка
   _clickLike(event) {
-    event.preventDefault();
     event.target.classList.toggle('card__like_active');
   }
+
+  // открытие попапа карточки
+  _openPopupCard() {
+    popupImage.src = this._link;
+    popupImage.alt = this._name;
+    popupFigcaption.textContent = this._name;
     
-  
-   // вставляем данные
+    openPopup(popupOpenImage); // откройте попап
+    }
+      
+  // вставляем данные в карточку
   generateCard() {
     this._element = this._getTemplate();
-  
+
+    this._likeButton = this._element.querySelector('.card__like')
+    this._deleteButton = this._element.querySelector('.card__delete-button')
+    
     this._element.querySelector('.card__title').textContent = this._name;
     this._image = this._element.querySelector('.card__image');
     this._image.alt = this._name;
@@ -55,12 +70,3 @@ class Card {
     return this._element;
   }
 }
-  
-initialCards.forEach((item) => {
-  const card = new Card(item, '#card-template');
-  const cardElement = card.generateCard();
-  
-  document.querySelector('.cards').prepend(cardElement);
-});
-
-//export default Card;
