@@ -18,7 +18,7 @@ export default class FormValidator {
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this._config.inputErrorClass);
-    errorElement.textContent = ' ';
+    errorElement.textContent = " ";
     errorElement.classList.remove(this._config.errorClass);
 };
 
@@ -41,7 +41,7 @@ export default class FormValidator {
       this._disableSubmitButton();
     } else {
       this._buttonElement.classList.remove(this._config.inactiveButtonClass);
-      this._buttonElement.removeAttribute('disabled', false);
+      this._buttonElement.removeAttribute("disabled", false);
     }
   };
 
