@@ -33,7 +33,7 @@ openPopupButton.addEventListener("click", () => {
   openPopup(profilePopup);
 });
 
-function formSubmitHandler(event) {
+function handleProfileFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
@@ -62,7 +62,7 @@ popups.forEach((popup) => {
   });
 });
 
-formReductElement.addEventListener("submit", formSubmitHandler);
+formReductElement.addEventListener("submit", handleProfileFormSubmit);
 
 openPopupButtonAddCard.addEventListener("click", () => openPopup(popupAddCard));
 
@@ -109,19 +109,23 @@ const linkInputCard = document.querySelector("#input-popup-link-card");
 export const popupImage = document.querySelector(".popup__image");
 export const popupFigcaption = document.querySelector(".popup__figcaption");
 
-initialCards.forEach((item) => {
+function createCard(item) {
   const card = new Card(item, "#card-template");
   const cardElement = card.generateCard();
+  return cardElement;
+}
 
+
+initialCards.forEach((item) => {
+  const cardElement = createCard(item);
   // Добавляем в DOM
   initialContainer.append(cardElement);
 });
 
 // функция создания карточки
 
-function createCard(item) {
-  const card = new Card(item, "#card-template");
-  const cardElement = card.generateCard();
+function prependCard(item) {
+  const cardElement = createCard(item);
   initialContainer.prepend(cardElement);
 }
 
@@ -130,7 +134,7 @@ function generateUserCard() {
   const userCard = {};
   userCard.name = nameInputCard.value;
   userCard.link = linkInputCard.value;
-  createCard(userCard);
+  prependCard(userCard);
 }
 
 // навешиваем слушаетль на форму по клику на сабмит
