@@ -1,0 +1,19 @@
+{
+  "name": "yandex_practikum",
+  "version": "0.0.1",
+  "description": "Проект выполнен после прохождения 7 спринта по макету Figma. В проекте произведен рефакторинг кода: созданы классы Card b FormValidator.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aigiul/mesto.git"
+  },
+  "author": "Aigiul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aigiul/mesto/issues"
+  },
+  "homepage": "https://github.com/Aigiul/mesto#readme"
+}

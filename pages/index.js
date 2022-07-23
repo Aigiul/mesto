@@ -1,5 +1,9 @@
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
+import Card from "../scripts/Card.js";
+import FormValidator from "../scripts/FormValidator.js";
+import { initialCards } from "../utils/constants.js";
+import Section from "../components/Section.js";
+
+
 export const config = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -14,14 +18,14 @@ const popups = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector(".popup_edit");
 const openPopupButtonAddCard = document.querySelector(".profile__add-button");
 const popupAddCard = document.querySelector(".popup_add-card");
-export const popupOpenImage = document.querySelector(".popup_view-card");
+const popupOpenImage = document.querySelector(".popup_view-card");
 const nameInput = document.querySelector("#input-popup-title");
 const jobInput = document.querySelector("#input-popup-subtitle");
 const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 const formReductElement = document.querySelector(".popup__container");
 
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", handleEscUp);
   popup.addEventListener("mousedown", closeClick);
@@ -75,59 +79,41 @@ const handleEscUp = (evt) => {
   }
 };
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+
 
 const initialContainer = document.querySelector(".cards");
 const formAddCard = document.querySelector("#popup-form-add-card");
 const nameInputCard = document.querySelector("#input-popup-title-card");
 const linkInputCard = document.querySelector("#input-popup-link-card");
-export const popupImage = document.querySelector(".popup__image");
-export const popupFigcaption = document.querySelector(".popup__figcaption");
+const popupImage = document.querySelector(".popup__image");
+const popupFigcaption = document.querySelector(".popup__figcaption");
+const cardsSelector = ".cards";
 
+function handleCardClick(name, link) {
+  popupImage.src = link; // устанавливаем ссылку
+  popupImage.alt = name; // устанавливаем подпись картинке
+  popupFigcaption.textContent = name;
+  openPopup(popupOpenImage); // открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+}
+
+// функция создания карточки
 function createCard(item) {
-  const card = new Card(item, "#card-template");
+  const card = new Card(item, "#card-template", handleCardClick);
   const cardElement = card.generateCard();
   return cardElement;
 }
 
 
-initialCards.forEach((item) => {
-  const cardElement = createCard(item);
-  // Добавляем в DOM
-  initialContainer.append(cardElement);
-});
-
-// функция создания карточки
 
 function prependCard(item) {
   const cardElement = createCard(item);
   initialContainer.prepend(cardElement);
 }
+
+
+
+
+
 
 // функция генерации карточки из формы
 function generateUserCard() {
@@ -150,3 +136,25 @@ const validatorProfile = new FormValidator(config, formReductElement);
 validatorProfile.enableValidation();
 const validatorCard = new FormValidator(config, formAddCard);
 validatorCard.enableValidation();
+
+// отрисовка через Section
+const cardsSection = new Section({ items: initialCards, renderer: (item) => {
+  const cardElement = createCard(item);
+  cardsSection.addItem(cardElement);
+}
+},
+cardsSelector);
+
+cardsSection.renderItems();
+
+
+// отрисовка карточек из массива
+/*
+initialCards.forEach((item) => {
+  const cardElement = createCard(item);
+  // Добавляем в DOM
+  initialContainer.append(cardElement);
+});*/
+
+// функция вставки карточки в контейнер
+

@@ -1,11 +1,10 @@
 
-import { popupOpenImage, openPopup, popupImage, popupFigcaption } from './index.js'
-
 export default class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
   
   _getTemplate() {
@@ -18,8 +17,7 @@ export default class Card {
     return cardElement; //вернем DOM-эелемент карточки 
   }
 
-  
-  _addEventListeners() {
+    _addEventListeners() {
     this._deleteButton.addEventListener('click', (event) => {
       this._deleteCard(event);
     });  // навешиваем слушатель на кнопку удаления карточки
@@ -29,7 +27,7 @@ export default class Card {
     });  // навешиваем слушатель на кнопку лайка
 
     this._image.addEventListener('click', () => {
-      this._openPopupCard(); 
+      this._handleCardClick(this._name, this._link)
     });  // навешиваем слушатель на картинку карточки
   }
 
@@ -43,16 +41,7 @@ export default class Card {
   _clickLike(event) {
     event.target.classList.toggle('card__like_active');
   }
-
-  // открытие попапа карточки
-  _openPopupCard() {
-    popupImage.src = this._link;
-    popupImage.alt = this._name;
-    popupFigcaption.textContent = this._name;
-    
-    openPopup(popupOpenImage); // откройте попап
-    }
-      
+     
   // вставляем данные в карточку
   generateCard() {
     this._element = this._getTemplate();
