@@ -1,7 +1,10 @@
-import Card from "../scripts/Card.js";
-import FormValidator from "../scripts/FormValidator.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 import { initialCards } from "../utils/constants.js";
 import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 
 export const config = {
@@ -25,7 +28,7 @@ const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 const formReductElement = document.querySelector(".popup__container");
 
-function openPopup(popup) {
+/*function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", handleEscUp);
   popup.addEventListener("mousedown", closeClick);
@@ -35,16 +38,16 @@ openPopupButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(profilePopup);
-});
+});*/
 
-function handleProfileFormSubmit(event) {
+/*function handleProfileFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(profilePopup);
 }
 
-// закрытие попапа
+/* закрытие попапа
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
@@ -64,20 +67,20 @@ popups.forEach((popup) => {
       closePopup(popup);
     }
   });
-});
+});*/
 
-formReductElement.addEventListener("submit", handleProfileFormSubmit);
+/*formReductElement.addEventListener("submit", handleProfileFormSubmit);
 
 openPopupButtonAddCard.addEventListener("click", () => openPopup(popupAddCard));
 
-// закрытие с помощью Esc
+/* закрытие с помощью Esc
 
 const handleEscUp = (evt) => {
   if (evt.key === "Escape") {
     const activePopup = document.querySelector(".popup_opened");
     closePopup(activePopup);
   }
-};
+};*/
 
 
 
@@ -89,11 +92,11 @@ const popupImage = document.querySelector(".popup__image");
 const popupFigcaption = document.querySelector(".popup__figcaption");
 const cardsSelector = ".cards";
 
+const popupWithImage = new PopupWithImage (".popup_view-card");
+popupWithImage.setEventListeners();
+
 function handleCardClick(name, link) {
-  popupImage.src = link; // устанавливаем ссылку
-  popupImage.alt = name; // устанавливаем подпись картинке
-  popupFigcaption.textContent = name;
-  openPopup(popupOpenImage); // открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+  popupWithImage.open(name, link);
 }
 
 // функция создания карточки
@@ -110,12 +113,25 @@ function prependCard(item) {
   initialContainer.prepend(cardElement);
 }
 
+// отрисовка через Section
+const cardsSection = new Section({ items: initialCards, renderer: (item) => {
+  const cardElement = createCard(item);
+  cardsSection.addItem(cardElement);
+}
+},
+cardsSelector);
+
+cardsSection.renderItems();
 
 
 
 
+const validatorProfile = new FormValidator(config, formReductElement);
+validatorProfile.enableValidation();
+const validatorCard = new FormValidator(config, formAddCard);
+validatorCard.enableValidation();
 
-// функция генерации карточки из формы
+/* функция генерации карточки из формы
 function generateUserCard() {
   const userCard = {};
   userCard.name = nameInputCard.value;
@@ -131,21 +147,6 @@ formAddCard.addEventListener("submit", (event) => {
   closePopup(popupAddCard);
   formAddCard.reset();
 });
-
-const validatorProfile = new FormValidator(config, formReductElement);
-validatorProfile.enableValidation();
-const validatorCard = new FormValidator(config, formAddCard);
-validatorCard.enableValidation();
-
-// отрисовка через Section
-const cardsSection = new Section({ items: initialCards, renderer: (item) => {
-  const cardElement = createCard(item);
-  cardsSection.addItem(cardElement);
-}
-},
-cardsSelector);
-
-cardsSection.renderItems();
 
 
 // отрисовка карточек из массива
