@@ -1,10 +1,10 @@
 
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor({ data, handleCardClick }, cardSelector ) {
     this._name = data.name;
     this._link = data.link;
-    this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._cardSelector = cardSelector;
   }
   
   _getTemplate() {
@@ -17,7 +17,7 @@ export default class Card {
     return cardElement; //вернем DOM-эелемент карточки 
   }
 
-    _addEventListeners() {
+  _addEventListeners() {
     this._deleteButton.addEventListener('click', (event) => {
       this._deleteCard(event);
     });  // навешиваем слушатель на кнопку удаления карточки
