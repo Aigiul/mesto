@@ -35,6 +35,7 @@ export default class Card {
   _deleteCard(event) {
     event.preventDefault();
     this._element.remove();
+    this._element = null;
   }
 
   // проставление лайка

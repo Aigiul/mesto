@@ -40,13 +40,13 @@ const cardsSection = new Section(
 
 cardsSection.renderItems();
 
-const createUserInfo = new UserInfo(
+const userInfo = new UserInfo(
   titleProfileSelector,
   subtitleProfileSelector
 );
 
-function editProfile() {
-  const profileData = createUserInfo.getUserInfo();
+function openPopupProfile() {
+  const profileData = userInfo.getUserInfo();
   nameInput.value = profileData.name;
   jobInput.value = profileData.job;
   popupWithFormReductElement.open();
@@ -56,7 +56,7 @@ function editProfile() {
 const popupWithFormReductElement = new PopupWithForm(
   {
     handleFormSubmit: (data) => {
-      createUserInfo.setUserInfo(data);
+      userInfo.setUserInfo(data);
       popupWithFormReductElement.close();
     },
   },
@@ -77,7 +77,7 @@ const popupWithFormAddCard = new PopupWithForm(
 popupWithFormAddCard.setEventListeners();
 
 profileEditButton.addEventListener("click", () => {
-  editProfile();
+  openPopupProfile();
 });
 
 openPopupButtonAddCard.addEventListener("click", () => {
