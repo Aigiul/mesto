@@ -7,15 +7,14 @@
   <meta name="author" content="Айгюль Наср">
   <meta name="keywords" content="Проект, ЯндексПрактикум">
   <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/logo.svg" alt="Логотип сайта Место">
+    <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Логотип сайта Место">
   </header>
   <main class="main">
     <section class="profile">
-      <img class="profile__avatar" alt="Аватарка" src="./images/avatar.jpg">
+      <img class="profile__avatar" alt="Аватарка" src="<%=require('./images/avatar.jpg')%>">
       <div class="profile__info">
         <div class="profile__user-name">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -78,6 +77,5 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./pages/index.js"></script>
 </body>
 </html>
