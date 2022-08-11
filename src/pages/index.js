@@ -1,12 +1,18 @@
 import './index.css';
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { initialCards, config, profileEditButton, openPopupButtonAddCard, nameInput, jobInput, 
+import { config, profileEditButton, openPopupButtonAddCard, nameInput, jobInput, 
 formReductElement, formAddCard, cardsSelector, titleProfileSelector, subtitleProfileSelector } from "../utils/constants.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from '../components/Api.js';
+
+// экземпляр АПИ
+
+const api = new Api(config.host, config.token);
+
 
 // попап с картинкой
 const popupWithImage = new PopupWithImage(".popup_view-card");
@@ -17,28 +23,43 @@ const createCard = function createCard(data) {
   const card = new Card(
     {
       data,
-      handleCardClick: (name, link) => {
-        popupWithImage.open(name, link);
+      handleCardClick: (name, link, id) => {
+        popupWithImage.open(name, link, id);
       },
     },
-    "#card-template"
+    "#card-template",
+    deleteCard
   );
   const cardElement = card.generateCard();
   return cardElement;
 };
 
+// удаление карточки
+
+function deleteCard(_id) {
+  return api.deleteCard(_id);
+}
+
+// Получение списка карточек с сервера и их рендеринг:
+api.getInitialCards()
+.then((data) => {
+	cardsSection.setItems(data);
+	cardsSection.renderItems();
+})
+.catch((err) => {
+	console.log(err);
+});
+
 // отрисовка через Section
 const cardsSection = new Section(
   {
-    items: initialCards,
+    items: [],
     renderer: (item) => {
       cardsSection.addItem(createCard(item));
     },
   },
   cardsSelector
-);
-
-cardsSection.renderItems();
+)
 
 const userInfo = new UserInfo(
   titleProfileSelector,
@@ -68,8 +89,17 @@ popupWithFormReductElement.setEventListeners();
 const popupWithFormAddCard = new PopupWithForm(
   {
     handleFormSubmit: (values) => {
-      cardsSection.addItem(createCard(values));
-      popupWithFormAddCard.close();
+     return api.addCard({
+        name: values.name,
+        link: values.link
+      })
+      .then((data) => {
+        cardsSection.addItem(createCard(data));
+        popupWithFormAddCard.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     },
   },
   ".popup_add-card"

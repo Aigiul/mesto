@@ -1,10 +1,12 @@
 
 export default class Card {
-  constructor({ data, handleCardClick }, cardSelector ) {
+  constructor({ data, handleCardClick }, cardSelector, handleDeleteClick ) {
     this._name = data.name;
     this._link = data.link;
+    this._cardId = data.id;
     this._handleCardClick = handleCardClick;
     this._cardSelector = cardSelector;
+    this._handleDeleteClick = handleDeleteClick;
   }
   
   _getTemplate() {
@@ -20,6 +22,9 @@ export default class Card {
   _addEventListeners() {
     this._deleteButton.addEventListener('click', (event) => {
       this._deleteCard(event);
+      if (this._ownerId !== this._myId) {
+        this._disableDelete(cardElement);
+      }
     });  // навешиваем слушатель на кнопку удаления карточки
 
     this._likeButton.addEventListener('click', (event) => {
@@ -32,11 +37,21 @@ export default class Card {
   }
 
   // удаление карточки
-  _deleteCard(event) {
-    event.preventDefault();
-    this._element.remove();
-    this._element = null;
+  async _deleteCard(event) {
+    try {
+      event.preventDefault();
+      await this._handleDeleteClick();
+      this._element.remove();
+      this._element = null;
+    }
+    catch(error) {
+      console.log(error);
+    }
   }
+// если карточка не моя
+  _disableDelete(cardElement) {
+		cardElement.querySelector(".card__delete-button").classList.add("card__delete-button_hidden");
+	}
 
   // проставление лайка
   _clickLike(event) {
@@ -47,8 +62,8 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate();
 
-    this._likeButton = this._element.querySelector('.card__like')
-    this._deleteButton = this._element.querySelector('.card__delete-button')
+    this._likeButton = this._element.querySelector('.card__like');
+    this._deleteButton = this._element.querySelector('.card__delete-button');
     
     this._element.querySelector('.card__title').textContent = this._name;
     this._image = this._element.querySelector('.card__image');

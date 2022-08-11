@@ -1,29 +1,3 @@
-export const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 export const config = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -31,6 +5,8 @@ export const config = {
   inactiveButtonClass: "popup__save-button_disabled",
   inputErrorClass: "popup__input_error",
   errorClass: "popup__error-message_active",
+  host: "https://mesto.nomoreparties.co/v1/cohort-47/cards",
+  token: "d1101bf3-b435-4d37-b654-33bba1f912ee",
 };
 export const profileEditButton = document.querySelector(".profile__edit-button");
 export const openPopupButtonAddCard = document.querySelector(".profile__add-button");
