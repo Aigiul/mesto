@@ -1,7 +1,8 @@
 export default class Api {
-  constructor (host, token) {
+  constructor (host, token, cardId) {
     this._host = host;
     this._token = token;
+    this._cardId = cardId;
     this._getJsonOrError = this._getJsonOrError.bind(this);
     this._getHeaders = this._getHeaders.bind(this);
   }
@@ -23,7 +24,7 @@ export default class Api {
   // метод получения списка карточек
 
   getInitialCards() {
-    return fetch(`${this._host}`, {
+    return fetch(`${this._host}/cards`, {
       headers: this._getHeaders(),
     })
     .then(this._getJsonOrError)
@@ -32,7 +33,7 @@ export default class Api {
   //метод добавления карточки на сервер
 
   addCard(data) {
-    return fetch(`${this._host}`, {
+    return fetch(`${this._host}/cards`, {
       method: 'POST',
       headers: this._getHeaders(),
       body: JSON.stringify(data),
@@ -42,8 +43,8 @@ export default class Api {
 
   // метод удаления картчоки
 
-  removeCard(cardId) {
-    return fetch(`cards/${cardId}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._host}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._getHeaders(),
     })

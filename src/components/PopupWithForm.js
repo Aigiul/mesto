@@ -10,12 +10,12 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    this._formValues = {};
+    const formValues = {};
     this._inputs.forEach (input => {
-      this._formValues[input.name] = input.value;
+      formValues[input.name] = input.value;
     });
 
-    return this._formValues;
+    return formValues;
   }
 
   setInputValues(formValues) {
@@ -28,10 +28,15 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    super.setEventListeners();
-    this._formElement.addEventListener('submit', (evt) => {
+      this._formElement.addEventListener('submit', (evt) => {
+      const oldValue = this._submitButton.textContent;
+      this._submitButton.textContent = "Сохранение...";
+      this._handleFormSubmit(this._getInputValues())
+      .finally(() => {
+        this._submitButton.textContent = oldValue;
+      })
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
     })
+    super.setEventListeners();
   }
 }
