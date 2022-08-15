@@ -25,6 +25,7 @@ export default class Api {
 
   getInitialCards() {
     return fetch(`${this._host}/cards`, {
+      method: 'GET',
       headers: this._getHeaders(),
     })
     .then(this._getJsonOrError)
@@ -41,12 +42,64 @@ export default class Api {
     .then(this._getJsonOrError)
   }
 
+  //метод простановки лайка у карточки
+
+  putLike(cardId) {
+    return fetch(`${this._host}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._getHeaders(),
+    })
+    .then(this._getJsonOrError)
+  }
+
+  //метод удаления лайка у карточки
+
+  deleteLike(cardId) {
+    return fetch(`${this._host}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._getHeaders(),
+    })
+    .then(this._getJsonOrError)
+  }
+
   // метод удаления картчоки
 
   deleteCard(cardId) {
     return fetch(`${this._host}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._getHeaders(),
+    })
+    .then(this._getJsonOrError)
+  }
+
+  //метод получения информации о юзере
+
+  getUserInfo() {
+    return fetch(`${this._host}/users/me`, {
+      method: 'GET',
+      headers: this._getHeaders(),
+    })
+    .then(this._getJsonOrError)
+  }
+
+  //метод обновления информации о юзере
+
+  addProfileInfo(data) {
+    return fetch(`${this._host}/users/me`, {
+      method: 'PATCH',
+      headers: this._getHeaders(),
+      body: JSON.stringify(data),
+    })
+    .then(this._getJsonOrError)
+  }
+
+  //метод измененния аватара
+
+  newAvatar(data) {
+    return fetch(`${this._host}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._getHeaders(),
+      body: JSON.stringify(data),
     })
     .then(this._getJsonOrError)
   }

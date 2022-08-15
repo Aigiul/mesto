@@ -1,18 +1,31 @@
 export default class UserInfo {
-  constructor(titleProfileSelector, subtitleProfileSelector) {
+  constructor(titleProfileSelector, subtitleProfileSelector, editAvatarButtonSelector) {
 	this._titleProfile = document.querySelector(titleProfileSelector);
 	this._subtitleProfile = document.querySelector(subtitleProfileSelector);
+  this._editAvatarButton = document.querySelector(editAvatarButtonSelector);
 	}
 
   getUserInfo() {
     return {
       name: this._titleProfile.textContent,
-      job: this._subtitleProfile.textContent,
+      about: this._subtitleProfile.textContent,
     };
   }
 
-  setUserInfo({ name, job }) {
-    this._titleProfile.textContent = name;
-    this._subtitleProfile.textContent = job;
+  setUserInfo(data) {
+    this._titleProfile.textContent = data.name;
+    this._subtitleProfile.textContent = data.about;
+  }
+
+  setUserAvatar(avatar) {
+    this._editAvatarButton.style.backgroundImage = `url(${avatar})`;
+  }
+
+  setUserId(id) {
+    this._userId = id;
+  }
+
+  getUserId() {
+    return this._userId;
   }
 }

@@ -18,3 +18,5 @@ export const formAddCard = document.querySelector("#popup-form-add-card");
 export const cardsSelector = ".cards";
 export const titleProfileSelector = ".profile__title";
 export const subtitleProfileSelector = ".profile__subtitle";
+export const editAvatarButtonSelector = ".profile__avatar";
+export const formNewAvatar = document.querySelector("#popup-form-avatar");
