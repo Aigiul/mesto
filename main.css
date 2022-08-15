@@ -5,7 +5,7 @@
 .header__logo{height:33px;margin:0;padding-bottom:41px;width:142px}@media screen and (max-width:1023px){.header__logo{height:24.4px;margin-left:27px;padding-bottom:31.6px;width:103.74px}}
 @media screen and (max-width:1023px){.main{padding-left:19px;padding-right:19px}}
 .profile{align-items:center;display:flex;justify-content:space-between;margin:40px auto 0;max-width:880px}@media screen and (max-width:879px){.profile{flex-direction:column}}
-.profile__avatar{border:1px solid #000;border-radius:100%;box-sizing:border-box;height:120px;margin:0 30px 0 0;width:120px}@media screen and (max-width:879px){.profile__avatar{margin:0 0 26px}}
+.profile__avatar{background-image:url(cdd6970e3d9f228be0e9.jpg);background-position:50%;background-size:cover;border:1px solid #000;border-radius:50%;box-sizing:border-box;height:120px;margin:0 30px 0 0;position:relative;width:120px}.profile__avatar:before{background-color:#000;background-image:url(a086f758840ae814ecde.svg);background-position:50%;background-repeat:no-repeat;background-size:26px;border-radius:40%;content:"";height:100%;left:0;opacity:0;position:absolute;top:0;width:100%}.profile__avatar:hover:before{cursor:pointer;opacity:.8;transition:opacity .3s ease}@media screen and (max-width:879px){.profile__avatar{margin:0 0 26px}}
 @media screen and (max-width:879px){.profile__info{align-items:center;display:flex;flex-direction:column;margin:0 auto 32px;max-width:282px}}
 .profile__title{font-size:42px;font-weight:500;line-height:1.14;margin:0 18px 0 0;max-width:375px;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap}@media screen and (max-width:879px){.profile__title{font-size:27px;line-height:1.22;margin:0 10px 0 26px;max-width:250px;text-align:center}}
 .profile__edit-button{background-color:unset;background-image:url(a1892ea72cb87c8fc3aa.svg);background-position:50%;background-repeat:no-repeat;border:1px solid #fff;box-sizing:border-box;cursor:pointer;height:24px;margin:0;outline:none;width:24px}.profile__edit-button:hover{opacity:.6}@media screen and (max-width:768px){.profile__edit-button{height:18px;width:18px}}
@@ -16,11 +16,14 @@
 .cards{display:flex;flex-wrap:wrap;justify-content:center;list-style:none;margin:0 auto;padding:0}@media screen and (max-width:1023px){.cards{justify-content:space-around}}@media screen and (max-width:768px){.cards{align-items:center;flex-direction:column}}
 .card{background-color:#fff;border:0 solid #000;border-radius:10px;display:flex;flex-direction:column;margin:0 17px 20px 0;overflow:hidden;position:relative;width:282px}.card:nth-of-type(3n){margin-right:0}@media screen and (max-width:1023px){.card:nth-of-type(3n){margin-right:17px}.card{margin:0 17px 20px 0}.card:nth-of-type(2n){margin-right:0}}@media screen and (max-width:768px){.card:nth-of-type(3n){margin-right:0}.card{margin:0 0 20px}}
 .card__delete-button{background-color:transparent;background-image:url(ce3b64935accf9b8212e.svg);background-position:50%;background-repeat:no-repeat;border:none;cursor:pointer;height:19px;outline:none;position:absolute;right:20px;top:20px;width:18px}.card__delete-button:hover{opacity:.6}
+.card__delete-button_hidden{display:none}
 .card__image{cursor:pointer;display:block;height:282px;-o-object-fit:cover;object-fit:cover;width:282px}
-.card__info{align-items:center;box-sizing:border-box;display:flex;justify-content:space-between;padding:25px 15px 25px 21px}
+.card__info{align-items:center;box-sizing:border-box;display:flex;justify-content:space-between;padding:21px 20px 18px 21px}
 .card__title{color:#000;font-size:24px;font-weight:900;line-height:29.05px;margin:0;max-width:210px;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap}
-.card__like{background-color:transparent;background-image:url(87ed371465c7a6a1cd01.svg);background-position:50%;background-repeat:no-repeat;border:none;cursor:pointer;height:19px;margin-right:5px;outline:none;padding:0;width:22px}.card__like:hover{opacity:.5}
+.card__like-number-container{align-items:center;display:flex;flex-direction:column;justify-content:space-between}
+.card__like{background-color:transparent;background-image:url(87ed371465c7a6a1cd01.svg);background-position:50%;background-repeat:no-repeat;border:none;cursor:pointer;height:19px;margin-bottom:4px;outline:none;width:22px}.card__like:hover{opacity:.5}
 .card__like_active{background-image:url(fe17a515669479b1e649.svg)}
+.card__like-number{align-items:center;color:#000;font-size:13px;line-height:15.73px;margin:0}
 .footer{display:flex;margin:47px auto 0}@media screen and (max-width:1023px){.footer{margin:28px auto 34.56px 19px}}
 .footer__copyright{color:#545454;font-size:18px;font-weight:400;line-height:21.78px;margin:0;text-align:left}@media screen and (max-width:768px){.footer__copyright{font-size:14px;line-height:16.94px}}
 .popup{align-items:center;background:rgba(0,0,0,.5);bottom:0;color:#000;display:flex;font-family:Inter,Arial,Helvetica,sans-serif;height:100%;justify-content:center;left:0;opacity:0;position:fixed;right:0;top:0;transition:visibility .9s,opacity .9s linear;visibility:hidden;width:100%;z-index:100}
@@ -28,6 +31,7 @@
 
 .popup__container{background:#fff;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.15);box-sizing:border-box;display:flex;flex-direction:column;margin:auto;max-width:430px;padding:34px 36px 37px;position:relative;width:100%;z-index:1}@media screen and (max-width:768px){.popup__container{max-width:282px;padding:25px 22px}}
 .popup__title{color:#000;font-size:24px;font-weight:900;line-height:29.05px;margin:0;padding-bottom:46px}@media screen and (max-width:768px){.popup__title{font-size:18px;font-weight:900;line-height:21.78px;padding-bottom:75px}}
+.popup__title-confirmation{color:#000;font-size:24px;font-weight:900;line-height:29.05px;margin:0;padding-bottom:16px}@media screen and (max-width:768px){.popup__title-confirmation{font-size:18px;font-weight:900;line-height:21.78px;padding-bottom:16px}}
 .popup__form{display:flex;flex-direction:column}
 .popup__input{border:0;border-bottom:1px solid rgba(0,0,0,.2);font-size:14px;line-height:17px;margin:0 0 3px;outline:none;padding:0 0 8px;width:100%}.popup__input:focus{outline:solid #70b6d1}
 .popup__input_error{border-bottom:1px solid red;margin:0 0 3px}
